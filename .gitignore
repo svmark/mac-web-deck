@@ -1,0 +1,9 @@
+# User data
+deck.json
+deck.json.*.tmp
+.runtime/
+
+# OS / editors
+.DS_Store
+node_modules/
+*.log

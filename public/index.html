@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#101010">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Mac Web Deck</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="deck-name">Mac Web Deck</h1>
+    <span id="connection" role="status">Connecting…</span>
+    <button id="edit-open" type="button" hidden disabled>Edit</button>
+  </header>
+
+  <form id="pair" hidden>
+    <label for="code">Pairing code shown on your Mac (run <code>npm run pair</code> for a new one)</label>
+    <div class="row">
+      <input id="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" placeholder="6 digits" required>
+      <button type="submit">Pair</button>
+    </div>
+  </form>
+
+  <div id="deck-view">
+    <nav id="pages" aria-label="Pages"></nav>
+    <section id="grid" aria-label="Buttons"></section>
+    <p id="result" role="status" aria-live="polite"></p>
+  </div>
+
+  <section id="editor" hidden aria-labelledby="editor-heading">
+    <h2 id="editor-heading">Edit deck</h2>
+    <label class="field">Deck title <input id="deck-title" maxlength="80" required></label>
+    <div id="editor-pages"></div>
+    <button id="add-page" type="button" class="secondary">+ Add page</button>
+    <p id="edit-message" role="alert"></p>
+    <div class="editor-actions">
+      <button id="save" type="button">Save</button>
+      <button id="cancel" type="button" class="secondary">Cancel</button>
+    </div>
+  </section>
+  <p id="reorder-status" role="status" class="visually-hidden"></p>
+</main>
+
+<dialog id="button-dialog" aria-labelledby="button-dialog-title">
+  <form method="dialog" id="button-form">
+    <h1 id="button-dialog-title">Button</h1>
+    <label class="field">Label <input id="b-label" maxlength="80" required autofocus></label>
+    <div class="two">
+      <label class="field">Icon <small>(emoji, optional)</small> <input id="b-icon" maxlength="8"></label>
+      <label class="field">Page <select id="b-page"></select></label>
+    </div>
+    <label class="field">Hint <small>(optional, shown under the label)</small> <input id="b-hint" maxlength="100"></label>
+    <label class="field">What it does
+      <select id="b-type">
+        <option value="openApp">Open an app</option>
+        <option value="openPath">Open a folder or file</option>
+        <option value="openUrl">Open a web page</option>
+        <option value="runShortcut">Run a Shortcut</option>
+        <option value="screenshot">Take a screenshot</option>
+      </select>
+    </label>
+    <div id="b-target"></div>
+    <p id="b-error" role="alert"></p>
+    <div class="dialog-actions">
+      <button value="cancel" formnovalidate class="secondary">Cancel</button>
+      <button value="ok" id="b-ok">Done</button>
+    </div>
+  </form>
+</dialog>
+<datalist id="apps-list"></datalist>
+<datalist id="shortcuts-list"></datalist>
+</body>
+</html>

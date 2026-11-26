@@ -1,0 +1,27 @@
+{
+  "title": "Mac Web Deck",
+  "pages": [
+    {
+      "id": "main",
+      "title": "Apps",
+      "buttons": [
+        { "id": "safari", "label": "Safari", "hint": "Browser", "action": { "type": "openApp", "bundleId": "com.apple.Safari" } },
+        { "id": "mail", "label": "Mail", "action": { "type": "openApp", "bundleId": "com.apple.mail" } },
+        { "id": "calendar", "label": "Calendar", "action": { "type": "openApp", "bundleId": "com.apple.iCal" } },
+        { "id": "notes", "label": "Notes", "action": { "type": "openApp", "bundleId": "com.apple.Notes" } },
+        { "id": "music", "label": "Music", "action": { "type": "openApp", "bundleId": "com.apple.Music" } },
+        { "id": "terminal", "label": "Terminal", "action": { "type": "openApp", "bundleId": "com.apple.Terminal" } },
+        { "id": "settings", "label": "System Settings", "action": { "type": "openApp", "bundleId": "com.apple.systempreferences" } }
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Tools",
+      "buttons": [
+        { "id": "capture", "label": "Screenshot", "icon": "📸", "hint": "Opens the capture tool", "action": { "type": "screenshot" } },
+        { "id": "downloads", "label": "Downloads", "icon": "⬇️", "action": { "type": "openPath", "path": "~/Downloads" } },
+        { "id": "web", "label": "Search", "icon": "🔎", "action": { "type": "openUrl", "url": "https://duckduckgo.com" } }
+      ]
+    }
+  ]
+}

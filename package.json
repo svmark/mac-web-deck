@@ -1,0 +1,17 @@
+{
+  "name": "mac-web-deck",
+  "version": "0.1.0",
+  "description": "A touch control panel for your Mac that runs in any browser on your Wi-Fi.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=22.6.0" },
+  "scripts": {
+    "start": "node --experimental-strip-types server.ts",
+    "test": "node --experimental-strip-types --test server.test.ts",
+    "pair": "node --experimental-strip-types scripts/admin.ts pair",
+    "forget-browsers": "node --experimental-strip-types scripts/admin.ts forget-browsers",
+    "autostart:install": "node --experimental-strip-types scripts/admin.ts autostart:install",
+    "autostart:remove": "node --experimental-strip-types scripts/admin.ts autostart:remove"
+  }
+}

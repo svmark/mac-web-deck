@@ -1,0 +1,8 @@
+{
+  "name": "Mac Web Deck",
+  "short_name": "Deck",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#101010",
+  "theme_color": "#101010"
+}
