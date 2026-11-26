@@ -5,6 +5,11 @@ Put an old iPad or your phone next to the keyboard, tap a button, and your Mac o
 
 [한국어 안내](README.ko.md)
 
+<p>
+  <img src="docs/screenshots/deck-tablet.png" alt="The deck on a tablet: a grid of app buttons with icons" height="260">
+  <img src="docs/screenshots/deck-phone.png" alt="The same deck on a phone" height="260">
+</p>
+
 - No app to install on the phone or tablet. Any modern browser works, and you can add it to the Home Screen.
 - Build your deck in the browser: add, remove and reorder buttons and pages, pick apps from the ones installed on your Mac (icons are added automatically), pick Shortcuts from your Shortcuts library.
 - Small codebase with no dependencies, so you can extend it yourself or with an AI coding assistant such as Claude Code. See [Customize with Claude Code](#customize-with-claude-code).
@@ -44,6 +49,8 @@ The first run creates `deck.json` from `deck.example.json`. Your deck lives in `
 ## Build your deck
 
 Tap **Edit** in the browser.
+
+<img src="docs/screenshots/editor.png" alt="The deck editor with the New button dialog: label, icon, page, action type and an app picker" width="720">
 
 - **Pages**: rename, reorder (↑ ↓), add (up to 8) or delete.
 - **Buttons**: up to 12 per page. Add, edit, reorder, move to another page, or delete.
