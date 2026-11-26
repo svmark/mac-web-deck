@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Guidance for AI coding assistants (Claude Code and others) working in this repository. Humans: see README.md.
+Guidance for AI coding assistants (Claude Code and others) working in this repository. Humans: see README.md (Korean) or README.en.md (English).
 
 ## What this is
 
@@ -50,7 +50,7 @@ Mac Web Deck: a Node.js server on the user's Mac serves a web page. A phone or t
 1. `config.ts`: add it to the `Action` union, validate its fields in `validateDeck()` (new `case`), and map it to a fixed command in `commandFor()`.
 2. `public/app.js`: add an `<option>` in `index.html` (`#b-type`), a `targetFields` entry (or `null` if it has no fields), and a label in `actionLabel`.
 3. `server.test.ts`: test validation (good and bad input) and `commandFor()` output.
-4. README: list it under "Build your deck".
+4. READMEs: list it under "메뉴 꾸미기" in `README.md` (Korean, the main page) and "Build your deck" in `README.en.md`.
 
 If the action needs something other than a one-shot command (state, a long-running helper), say so to the user before building it.
 

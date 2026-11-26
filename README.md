@@ -1,26 +1,26 @@
 # Mac Web Deck
 
-A touch control panel for your Mac that runs in any browser on your Wi-Fi.
-Put an old iPad or your phone next to the keyboard, tap a button, and your Mac opens an app, a folder, a web page, or runs a Shortcut.
+같은 Wi-Fi의 브라우저에서 쓰는 맥 버튼판입니다.
+쓰지 않는 iPad나 휴대폰을 키보드 옆에 두고 버튼을 누르면, 맥에서 앱·폴더·웹페이지가 열리거나 단축어가 실행됩니다.
 
-[한국어 안내](README.ko.md)
+[English](README.en.md)
 
 <p>
-  <img src="docs/screenshots/deck-tablet.png" alt="The deck on a tablet: a grid of app buttons with icons" height="260">
-  <img src="docs/screenshots/deck-phone.png" alt="The same deck on a phone" height="260">
+  <img src="docs/screenshots/deck-tablet.png" alt="태블릿에서 본 버튼판: 앱 아이콘이 있는 버튼 격자" height="260">
+  <img src="docs/screenshots/deck-phone.png" alt="휴대폰에서 본 같은 버튼판" height="260">
 </p>
 
-- No app to install on the phone or tablet. Any modern browser works, and you can add it to the Home Screen.
-- Build your deck in the browser: add, remove and reorder buttons and pages, pick apps from the ones installed on your Mac (icons are added automatically), pick Shortcuts from your Shortcuts library.
-- Small codebase with no dependencies, so you can extend it yourself or with an AI coding assistant such as Claude Code. See [Customize with Claude Code](#customize-with-claude-code).
+- 휴대폰·태블릿에 앱을 설치할 필요가 없습니다. 최신 브라우저면 되고, 홈 화면에 추가할 수도 있습니다.
+- 메뉴는 브라우저에서 꾸밉니다. 버튼과 페이지를 추가·삭제하고 순서를 바꿀 수 있습니다. 앱은 맥에 설치된 앱 목록에서 고르면 아이콘이 자동으로 붙고, 단축어도 목록에서 고릅니다.
+- 의존성 없는 작은 코드라서 직접 또는 Claude Code 같은 AI 코딩 도구로 고쳐 쓰기 쉽습니다. 아래 'Claude Code로 고쳐 쓰기'를 참고하세요.
 
-## Requirements
+## 필요한 것
 
 - macOS
-- Node.js 22.6 or later (`node --version`). Install from [nodejs.org](https://nodejs.org) or with Homebrew (`brew install node`).
-- The Mac and the browser device on the same network.
+- Node.js 22.6 이상(`node --version`으로 확인). [nodejs.org](https://nodejs.org)나 Homebrew(`brew install node`)로 설치합니다.
+- 맥과 브라우저 기기가 같은 네트워크에 있어야 합니다.
 
-## Install and run
+## 설치와 실행
 
 ```bash
 git clone https://github.com/svmark/mac-web-deck.git
@@ -28,81 +28,69 @@ cd mac-web-deck
 npm start
 ```
 
-The server prints the addresses to open and a 6-digit pairing code:
+서버가 접속 주소와 6자리 연결 코드를 보여 줍니다. iPad나 휴대폰에서 그 주소를 열고 코드를 넣으면 연결됩니다. 연결은 서버를 다시 시작해도 유지됩니다.
 
-```
-Mac Web Deck is running.
-  On this Mac:   http://localhost:4310
-  Other devices: http://your-mac.local:4310
-Pairing code: 123456 (valid 10 minutes, single use)
-```
+- 다른 기기용 새 코드: `npm run pair` (서버가 켜져 있을 때)
+- 로그인할 때 자동 실행: `npm run autostart:install` (해제는 `npm run autostart:remove`). 기록은 `.runtime/server.out.log`에 남습니다.
+- 연결된 브라우저 모두 해제: `npm run forget-browsers`
+- 다른 포트 사용: `PORT=4400 npm start`
 
-Open the address on your iPad or phone, enter the code, and you are paired. The pairing is remembered, also after the server restarts.
+처음 실행하면 `deck.example.json`을 복사해 `deck.json`을 만듭니다. 내 메뉴는 `deck.json`에 저장되며 git에는 올라가지 않습니다.
 
-- New code for another device: `npm run pair` (while the server is running).
-- Start automatically when you log in: `npm run autostart:install` (remove with `npm run autostart:remove`). Logs go to `.runtime/server.out.log`; `npm run pair` then shows the new code there.
-- Unpair every browser: `npm run forget-browsers`.
-- Use another port: `PORT=4400 npm start`.
+## 메뉴 꾸미기
 
-The first run creates `deck.json` from `deck.example.json`. Your deck lives in `deck.json` (not tracked by git).
+브라우저에서 **Edit**를 누릅니다.
 
-## Build your deck
+<img src="docs/screenshots/editor.png" alt="버튼 편집 화면과 새 버튼 창: 이름, 아이콘, 페이지, 동작 종류, 앱 고르기" width="720">
 
-Tap **Edit** in the browser.
+- **페이지**: 이름 바꾸기, 순서 바꾸기(↑ ↓), 추가(최대 8개), 삭제
+- **버튼**: 페이지당 최대 12개. 추가, 수정, 순서 바꾸기, 다른 페이지로 옮기기, 삭제
+- 버튼이 할 수 있는 일
+  - **앱 열기**: 앱 이름을 입력해 고르면 아이콘이 자동으로 붙습니다.
+  - **폴더·파일 열기**: `~/Documents`, `/Applications` 같은 경로
+  - **웹페이지 열기**: 맥의 기본 브라우저로 엽니다.
+  - **단축어 실행**: 단축어 앱의 단축어를 고릅니다. 음악 조작, 집중 모드, 스크립트 실행 등 거의 모든 일을 단축어로 만들 수 있어서, 코드 없이 나만의 동작을 추가하는 방법입니다.
+  - **스크린샷**: macOS 캡처 도구를 엽니다.
+- 이모지 아이콘과 짧은 설명 줄은 선택입니다.
 
-<img src="docs/screenshots/editor.png" alt="The deck editor with the New button dialog: label, icon, page, action type and an app picker" width="720">
+**Save**를 누르면 `deck.json`에 저장되고, 연결된 브라우저 모두 2초 안에 바뀝니다. 이전 설정은 `.runtime/backups/`에 최근 20개까지 남습니다.
 
-- **Pages**: rename, reorder (↑ ↓), add (up to 8) or delete.
-- **Buttons**: up to 12 per page. Add, edit, reorder, move to another page, or delete.
-- Each button does one of:
-  - **Open an app**: start typing the app name and pick it. The icon is taken from the app.
-  - **Open a folder or file**: a path such as `~/Documents` or `/Applications`.
-  - **Open a web page**: an `http` or `https` address, opened in the Mac's default browser.
-  - **Run a Shortcut**: pick a shortcut from the Shortcuts app. Shortcuts can do almost anything (control music, toggle Focus, run scripts), so this is the way to add your own actions without code.
-  - **Take a screenshot**: opens the macOS screenshot tool.
-- Optional emoji icon and a short hint line under the label.
+## 보안
 
-**Save** writes `deck.json` and every connected browser updates within a couple of seconds. The previous version is kept in `.runtime/backups/` (last 20).
+실행하기 전에 읽어 주세요.
 
-You can also edit `deck.json` by hand and restart the server.
+- 네트워크에서 이 맥에 접속할 수 있고 **연결을 마친** 브라우저라면 누구나 버튼을 실행할 수 있습니다. 연결에는 맥에만 표시되는 6자리 코드가 필요합니다. 코드는 한 번만 쓸 수 있고 10분 뒤 만료되며 10번까지 시도할 수 있습니다.
+- 통신은 로컬 네트워크의 HTTP입니다(암호화 없음). 집처럼 믿을 수 있는 네트워크에서만 쓰고, 포트를 인터넷에 열지 마세요.
+- 버튼은 메뉴에 등록된 동작만 실행합니다. 위의 다섯 가지 동작이 정해진 macOS 명령으로만 실행되고, 셸을 거치지 않습니다. 요청으로 임의의 명령을 실행할 수 없습니다.
+- 다른 웹사이트가 브라우저를 통해 이 서버를 조작하지 못하도록 `Host`와 `Origin`을 검사합니다.
+- 기기를 잃어버리면 `npm run forget-browsers`로 모든 연결을 해제하세요.
 
-## Security
+## Claude Code로 고쳐 쓰기
 
-Read this before you run it.
+TypeScript 파일 몇 개와 HTML·CSS·JS로만 이뤄져 있어 AI 도구가 전체를 읽고 고치기 쉽습니다. [`CLAUDE.md`](CLAUDE.md)에 구조, 지켜야 할 규칙, 자주 하는 작업 순서가 있고 Claude Code가 자동으로 읽습니다.
 
-- Anyone who can reach the Mac on your network **and** has paired a browser can trigger the buttons on your deck. Pairing needs the 6-digit code that only the Mac shows; a code works once and expires after 10 minutes, with 10 attempts at most.
-- Traffic is plain HTTP on your local network. Use it on a network you trust (home, not a café). Do not forward the port to the internet.
-- A button can only do what is on the deck: the five action types above, with fixed macOS commands and no shell. Nothing in a request can run an arbitrary command.
-- The server checks the `Host` and `Origin` headers to block other websites from driving it through your browser.
-- Paired browsers are stored as hashes in `.runtime/sessions.json`. Lost a device? Run `npm run forget-browsers`.
-- macOS may ask for permission the first time a Shortcut or app is controlled. Approve only what you expect.
+이 폴더를 Claude Code로 열고 이렇게 요청해 보세요.
 
-## Customize with Claude Code
+- "맥 음소거를 켜고 끄는 버튼 종류를 추가해 줘."
+- "iPad에서 버튼을 더 크게, 밝은 테마로 바꿔 줘."
+- "단축어로 재생/일시정지, 다음 곡, 이전 곡 버튼이 있는 미디어 페이지를 만들어 줘."
+- "헤더에 맥 배터리 잔량을 보여 줘."
+- "웹페이지 버튼이 기본 브라우저 대신 Chrome으로 열리게 해 줘."
 
-The project is intentionally small (a few TypeScript files, plain HTML/CSS/JS, no build step, no dependencies) so an AI assistant can read all of it. [`CLAUDE.md`](CLAUDE.md) explains the structure, the rules, and the steps for common changes, and Claude Code reads it automatically.
+새 동작은 정해진 명령과 검증된 값으로만 만들고, '아무 명령이나 실행하는 버튼'은 만들지 않는 것이 `CLAUDE.md`의 보안 원칙입니다.
 
-Open the folder in Claude Code and ask, for example:
+## 파일 구성
 
-- "Add a button type that toggles the Mac's mute and shows a speaker icon."
-- "Make the tiles bigger on iPad and use a light theme."
-- "Add a page of media buttons: play/pause, next, previous, using Shortcuts."
-- "Show the Mac's battery level in the header."
-- "Let a button open a URL in a specific browser (Chrome) instead of the default."
-
-Keep the security rules in `CLAUDE.md`: new actions must be fixed commands with validated arguments, never "run this command" buttons.
-
-## Project layout
-
-| File | What it does |
+| 파일 | 하는 일 |
 |---|---|
-| `server.ts` | HTTP server, pairing, API, running buttons |
-| `config.ts` | Deck format, validation, action → command |
-| `apps.ts` | Installed apps, app icons, Shortcuts list |
-| `sessions.ts` | Remembered browsers |
-| `public/` | The web app (deck and editor) |
-| `scripts/admin.ts` | `npm run pair`, autostart, forget browsers |
-| `server.test.ts` | Tests (`npm test`) |
+| `server.ts` | 서버, 연결, 버튼 실행 |
+| `config.ts` | 메뉴 형식·검증 |
+| `apps.ts` | 앱 목록·아이콘·단축어 |
+| `sessions.ts` | 연결된 브라우저 기억 |
+| `public/` | 웹 화면(버튼판·편집) |
+| `scripts/admin.ts` | 코드 발급·자동 실행 |
+| `server.test.ts` | 테스트(`npm test`) |
 
-## License
+## 라이선스
 
-MIT. See [LICENSE](LICENSE).
+MIT. [LICENSE](LICENSE)를 참고하세요.
